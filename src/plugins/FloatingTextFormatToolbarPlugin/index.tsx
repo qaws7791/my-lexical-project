@@ -202,16 +202,7 @@ function TextFormatFloatingToolbar({
           >
             <i className="format italic" />
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-            }}
-            className={"popup-item spaced " + (isUnderline ? "active" : "")}
-            aria-label="Format text to underlined"
-          >
-            <i className="format underline" />
-          </button>
+
           <button
             type="button"
             onClick={() => {
@@ -267,7 +258,7 @@ function TextFormatFloatingToolbar({
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "highlight");
             }}
-            className={"popup-item spaced" + (isHighlight ? "active" : "")}
+            className={"popup-item spaced " + (isHighlight ? "active" : "")}
             aria-label="Highlight text"
           >
             <i className="format highlight" />
@@ -292,6 +283,7 @@ function useFloatingTextFormatToolbar(
   const [isSubscript, setIsSubscript] = useState(false);
   const [isSuperscript, setIsSuperscript] = useState(false);
   const [isCode, setIsCode] = useState(false);
+  const [isHighlight, setIsHighlight] = useState(false);
 
   const updatePopup = useCallback(() => {
     editor.getEditorState().read(() => {
@@ -327,6 +319,7 @@ function useFloatingTextFormatToolbar(
       setIsSubscript(selection.hasFormat("subscript"));
       setIsSuperscript(selection.hasFormat("superscript"));
       setIsCode(selection.hasFormat("code"));
+      setIsHighlight(selection.hasFormat("highlight"));
 
       // Update links
       const parent = node.getParent();
@@ -389,6 +382,7 @@ function useFloatingTextFormatToolbar(
       isSuperscript={isSuperscript}
       isUnderline={isUnderline}
       isCode={isCode}
+      isHighlight={isHighlight}
       setIsLinkEditMode={setIsLinkEditMode}
     />,
     anchorElem
